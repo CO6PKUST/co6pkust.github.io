@@ -15,7 +15,7 @@
 function authorizeWithGoogle() {
   // Replace YOUR_CLIENT_ID and REDIRECT_URI with your actual values
   const clientId = "888245132190-ur9ifn150cl4ralmnank5on5riaqdv28.apps.googleusercontent.com";
-  const redirectUri = "https://co6pkust.github.io";
+  const redirectUri = "http://localhost:8080/oauth2/callback";
   
   // Construct the authorization URL
   const authorizationUrl = `https://accounts.google.com/o/oauth2/auth` +
@@ -39,7 +39,7 @@ if (authorizationCode) {
 
 function sendAuthorizationCodeToBackend(code) {
   // Replace YOUR_BACKEND_ENDPOINT with the actual endpoint on your backend for token exchange
-  const backendEndpoint = "http://localhost:8080/oauth2/callback";
+  const backendEndpoint = "http://localhost:8080/oauth2/endPoint";
   
   // Make a POST request to your backend with the authorization code
   axios.post(backendEndpoint, { code })
