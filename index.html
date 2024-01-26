@@ -1,13 +1,58 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<title>Лабораторная работа No3. ФИО</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login with Google</title>
 </head>
 <body>
 
-<h1>Это простая веб странница</h1>
+<button onclick="authorizeWithGoogle()">Login with Google</button>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+function authorizeWithGoogle() {
+  // Replace YOUR_CLIENT_ID and REDIRECT_URI with your actual values
+  const clientId = "888245132190-ur9ifn150cl4ralmnank5on5riaqdv28.apps.googleusercontent.com";
+  const redirectUri = "REDIRECT_URI";
+  
+  // Construct the authorization URL
+  const authorizationUrl = `https://accounts.google.com/o/oauth2/auth` +
+    `?client_id=${clientId}` +
+    `&redirect_uri=${redirectUri}` +
+    `&response_type=code` +
+    `&scope=openid%20profile%20email`;
+    
+  // Redirect the user to Google for authentication
+  window.location.href = authorizationUrl;
+}
+
+// After the user is redirected back to your site, you can extract the authorization code from the URL
+const urlParams = new URLSearchParams(window.location.search);
+const authorizationCode = urlParams.get('code');
+
+// If the authorization code is present, send it to the backend
+if (authorizationCode) {
+  sendAuthorizationCodeToBackend(authorizationCode);
+}
+
+function sendAuthorizationCodeToBackend(code) {
+  // Replace YOUR_BACKEND_ENDPOINT with the actual endpoint on your backend for token exchange
+  const backendEndpoint = "YOUR_BACKEND_ENDPOINT";
+  
+  // Make a POST request to your backend with the authorization code
+  axios.post(backendEndpoint, { code })
+    .then(response => {
+      // Handle successful authentication on the backend
+      console.log('Backend authentication successful:', response.data);
+    })
+    .catch(error => {
+      // Handle authentication error
+      console.error('Backend authentication error:', error);
+    });
+}
+
+</script>
 </body>
 </html>
